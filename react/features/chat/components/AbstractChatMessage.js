@@ -5,6 +5,10 @@ import { PureComponent } from 'react';
 import { getLocalizedDateFormatter } from '../../base/i18n';
 import { MESSAGE_TYPE_ERROR, MESSAGE_TYPE_LOCAL } from '../constants';
 
+import {
+    getCurrentConference,
+} from '../../../../react/features/base/conference';
+
 /**
  * Formatter string to display the message timestamp.
  */
@@ -19,6 +23,14 @@ export type Props = {
      * The representation of a chat message.
      */
     message: Object,
+    
+	/* ADDED BY AARMN */
+	isPinned: boolean,
+
+    /**
+     * Whether the user is moderator or not (for message pinning).
+     */
+    _isUserModerator: Boolean,
 
     /**
      * Whether or not the avatar image of the participant which sent the message
@@ -84,5 +96,16 @@ export default class AbstractChatMessage<P: Props> extends PureComponent<P> {
         return t('chat.privateNotice', {
             recipient: message.messageType === MESSAGE_TYPE_LOCAL ? message.recipient : t('chat.you')
         });
+    }
+
+    /**
+     * Check if user is moderator or not
+     * 
+     * @returns {Boolean}
+     */ 
+    _getIfImModerator() {
+        const conference = getCurrentConference();
+        const myID = conference.getMyUserId()
+        return conference.isParticipantModerator(myID);
     }
 }

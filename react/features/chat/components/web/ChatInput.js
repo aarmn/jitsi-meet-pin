@@ -10,7 +10,7 @@ import { Icon, IconPlane, IconSmile } from '../../../base/icons';
 import { connect } from '../../../base/redux';
 import { areSmileysDisabled } from '../../functions';
 
-import SmileysPanel from './SmileysPanel';
+// import SmileysPanel from './SmileysPanel';
 
 /**
  * The type of the React {@code Component} props of {@link ChatInput}.
@@ -122,31 +122,6 @@ class ChatInput extends Component<Props, State> {
         return (
             <div className = { `chat-input-container${this.state.message.trim().length ? ' populated' : ''}` }>
                 <div id = 'chat-input' >
-                    { this.props._areSmileysDisabled ? null : (
-                        <div className = 'smiley-input'>
-                            <div id = 'smileysarea'>
-                                <div id = 'smileys'>
-                                    <div
-                                        aria-expanded = { this.state.showSmileysPanel }
-                                        aria-haspopup = 'smileysContainer'
-                                        aria-label = { this.props.t('chat.smileysPanel') }
-                                        className = 'smiley-button'
-                                        onClick = { this._onToggleSmileysPanel }
-                                        onKeyDown = { this._onEscHandler }
-                                        onKeyPress = { this._onToggleSmileysPanelKeyPress }
-                                        role = 'button'
-                                        tabIndex = { 0 }>
-                                        <Icon src = { IconSmile } />
-                                    </div>
-                                </div>
-                            </div>
-                            <div
-                                className = { smileysPanelClassName } >
-                                <SmileysPanel
-                                    onSmileySelect = { this._onSmileySelect } />
-                            </div>
-                        </div>
-                    ) }
                     <div className = 'usrmsg-form'>
                         <TextareaAutosize
                             autoComplete = 'off'

@@ -1,4 +1,5 @@
 // @flow
+/* eslint-disable */
 
 import React from 'react';
 import { toArray } from 'react-emoji-render';
@@ -8,18 +9,16 @@ import { Linkify } from '../../../base/react';
 import { MESSAGE_TYPE_LOCAL } from '../../constants';
 import AbstractChatMessage, { type Props } from '../AbstractChatMessage';
 
+import PinToTopButton from './PinToTopButton';
 import PrivateMessageButton from './PrivateMessageButton';
 
-/**
- * Renders a single chat message.
- */
 class ChatMessage extends AbstractChatMessage<Props> {
     /**
      * Implements React's {@link Component#render()}.
      *
      * @inheritdoc
      * @returns {ReactElement}
-     */
+     */ 
     render() {
         const { message, t } = this.props;
         const processedMessage = [];
@@ -33,14 +32,17 @@ class ChatMessage extends AbstractChatMessage<Props> {
         const content = [];
 
         for (const token of tokens) {
-            if (token.includes('://')) {
+            // if (token.includes('://')) {
                 // It contains a link, bypass the emojification.
-                content.push(token);
-            } else {
-                content.push(...toArray(token, { className: 'smiley' }));
-            }
-
+            content.push(token);
+            // } else {
+            //     content.push(...toArray(token, { className: 'smiley' }));
+            // }
             content.push(' ');
+
+            // tbh, I hate how emojis work in jitsi, so let's get rid of them
+            // any text emojifier is on my nerve
+
         }
 
         content.forEach(i => {
@@ -60,6 +62,10 @@ class ChatMessage extends AbstractChatMessage<Props> {
                         <div className = 'messagecontent'>
                             { this.props.showDisplayName && this._renderDisplayName() }
                             <div className = 'usermessage'>
+                            {true ? (<span>
+                            <PinToTopButton></PinToTopButton>
+                            </span>) : null}
+                            <span>
                                 <span className = 'sr-only'>
                                     { this.props.message.displayName === this.props.message.recipient
                                         ? t('chat.messageAccessibleTitleMe')
@@ -67,6 +73,7 @@ class ChatMessage extends AbstractChatMessage<Props> {
                                         { user: this.props.message.displayName }) }
                                 </span>
                                 { processedMessage }
+                            </span>
                             </div>
                             { message.privateMessage && this._renderPrivateNotice() }
                         </div>
@@ -78,7 +85,7 @@ class ChatMessage extends AbstractChatMessage<Props> {
                                         reply = { true }
                                         showLabel = { false } />
                                 </div>
-                            ) }
+                        )}
                     </div>
                 </div>
                 { this.props.showTimestamp && this._renderTimestamp() }
@@ -91,6 +98,8 @@ class ChatMessage extends AbstractChatMessage<Props> {
     _getMessageText: () => string;
 
     _getPrivateNoticeMessage: () => string;
+
+    _getIfImModerator: () => Boolean;
 
     /**
      * Renders the display name of the sender.

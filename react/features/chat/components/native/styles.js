@@ -71,6 +71,11 @@ export default {
         flexDirection: 'row'
     },
 
+    messagePinned: {
+        alignItems: null,
+        alignSelf: "start"
+    }
+
     /**
      * Wrapper View for the entire block.
      */

@@ -38,6 +38,11 @@ export type Props = {
     _messages: Array<Object>,
 
     /**
+     * Pinned messages in the conference.
+     */
+    _pinnedMessages: Array<Object>,
+
+    /**
      * Number of unread chat messages.
      */
     _nbUnreadMessages: number,
@@ -101,12 +106,23 @@ export default class AbstractChat<P: Props> extends Component<P> {
      * the new {@code AbstractChat} instance with.
      */
     constructor(props: P) {
+        
+        /**
+         * 
+         * isParticipantModerator(id)
+         * getMyUserId
+         * 
+         * 
+         * Renders a single chat message.
+         */
         super(props);
 
         // Bind event handlers so they are only bound once per instance.
         this._onSendMessage = this._onSendMessage.bind(this);
         this._onToggleChatTab = this._onToggleChatTab.bind(this);
         this._onTogglePollsTab = this._onTogglePollsTab.bind(this);
+
+        
     }
 
     _onSendMessage: (string) => void;

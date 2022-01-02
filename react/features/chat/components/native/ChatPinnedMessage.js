@@ -26,7 +26,8 @@ type Props = AbstractProps & {
 /**
  * Renders a single chat message.
  */
-class ChatMessage extends AbstractChatMessage<Props> {
+
+class ChatPinnedMessage extends AbstractChatMessage<Props> {
     /**
      * Implements {@code Component#render}.
      *
@@ -34,7 +35,6 @@ class ChatMessage extends AbstractChatMessage<Props> {
      */
     render() {
         const { _styles, message } = this.props;
-        const localMessage = message.messageType === MESSAGE_TYPE_LOCAL;
         const { privateMessage } = message;
 
         // Style arrays that need to be updated in various scenarios, such as
@@ -46,25 +46,13 @@ class ChatMessage extends AbstractChatMessage<Props> {
             styles.messageBubble
         ];
 
-        if (localMessage) {
-            // This is a message sent by the local participant.
+        // if (message.messageType === MESSAGE_TYPE_ERROR) {
+        //     // This is a system message.
 
-            // The wrapper needs to be aligned to the right.
-            detailsWrapperStyle.push(styles.ownMessageDetailsWrapper);
-
-            // The bubble needs some additional styling
-            messageBubbleStyle.push(_styles.localMessageBubble);
-        } else if (message.messageType === MESSAGE_TYPE_ERROR) {
-            // This is a system message.
-
-            // The bubble needs some additional styling
-            messageBubbleStyle.push(styles.systemMessageBubble);
-        } else {
-            // This is a remote message sent by a remote participant.
-
-            // The bubble needs some additional styling
-            messageBubbleStyle.push(_styles.remoteMessageBubble);
-        }
+        //     // The bubble needs some additional styling
+        //     messageBubbleStyle.push(styles.systemMessageBubble);
+        // should be prevented from pinning an error
+        // how to check access, emit changes for all and let a pure client render it
 
         if (privateMessage) {
             messageBubbleStyle.push(_styles.privateMessageBubble);
@@ -85,7 +73,6 @@ class ChatMessage extends AbstractChatMessage<Props> {
                         { this._renderPrivateReplyButton() }
                         { this._renderPinButton() }
                     </View>
-                    { this._renderTimestamp() }
                     { this._renderTimestamp() }
                 </View>
             </View>

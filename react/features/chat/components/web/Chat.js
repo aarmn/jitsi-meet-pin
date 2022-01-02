@@ -192,7 +192,10 @@ class Chat extends AbstractChat<Props> {
                     className = { clsx('chat-panel', !_isPollsEnabled && 'chat-panel-no-tabs') }
                     id = 'chat-panel'
                     role = 'tabpanel'>
+                    <div>
+                    </div>
                     <MessageContainer
+                        pinned = {this.props._pinnedMessages}
                         messages = { this.props._messages }
                         ref = { this._messageContainerRef } />
                     <MessageRecipient />
@@ -282,7 +285,7 @@ class Chat extends AbstractChat<Props> {
         }
     }
 
-    _onSendMessage: (string) => void;
+    _onSendMessage (string) => void;
 
     _onToggleChat: () => void;
 

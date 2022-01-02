@@ -185,7 +185,8 @@ StateListenerRegistry.register(
             // Clear chat messages.
             dispatch(clearMessages());
         }
-    });
+    }
+);
 
 StateListenerRegistry.register(
     state => state['features/chat'].isOpen,
